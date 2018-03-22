@@ -11,10 +11,13 @@ public:
   Controller();
   Controller(int pinButton, int pinRelay, int pinLed, byte relayState);
   void setup();
-  void execute();
+  bool execute();
   int buttonDelay;
-private:
+  int getRelayState();
+  int getRelayPin();
   int pinButton;
+private:
+  // int pinButton;
   int pinRelay;
   int pinLed;
   byte defaultRelayState;

@@ -27,18 +27,18 @@ void Controller::setup() {
   this->lastEvent = millis();
 }
 
-void Controller::execute() {
+bool Controller::execute() {
   this->led.run();
 
   long now = millis();
 
   byte buttonState = this->button.get();
   if (!(HIGH == buttonState)) {
-    return;
+    return false;
   }
 
   if (now - this->lastEvent < this->buttonDelay) {
-    return;
+    return false;
   }
   this->lastEvent = now;
 
@@ -46,11 +46,22 @@ void Controller::execute() {
   byte relayState = this->relay.get();
   if (this->defaultRelayState == relayState) {
     this->led.stop();
-    return;
+    return true;
   }
 
   if (!this->defaultRelayState == relayState) {
     this->led.start();
-    return;
+    return true;
   }
+
+  return false;
+}
+
+int Controller::getRelayState() {
+  int relayState = (this->defaultRelayState == this->relay.get()) ? 0 : 1;
+  return relayState;
+}
+
+int Controller::getRelayPin() {
+  return this->pinRelay;
 }
