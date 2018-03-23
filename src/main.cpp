@@ -18,8 +18,9 @@ const char* ssid = "";
 const char* password = "";
 
 unsigned int localPort = 4210;
+String remoteIP = "192.168.33.155";
 
-Board board = Board(ssid, password, localPort);
+Board board = Board(ssid, password, localPort, remoteIP);
 
 // WiFiUDP Udp;
 

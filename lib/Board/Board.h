@@ -10,7 +10,7 @@
 class Board {
 public:
   Board();
-  Board(const char* ssid, const char* password, unsigned int localPort);
+  Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP);
   void setup(int countControllers, Controller *controllers);
   void receive();
   void send();
@@ -24,6 +24,7 @@ private:
   char incomingBuffer[255];
   bool connected = true;
   const int connectionWait = 5000;
+  String remoteIP;
 };
 
 #endif

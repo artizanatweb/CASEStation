@@ -7,10 +7,11 @@
 
 Board::Board() {}
 
-Board::Board(const char* ssid, const char* password, unsigned int localPort) {
+Board::Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP) {
   this->ssid = ssid;
   this->password = password;
   this->localPort = localPort;
+  this->remoteIP = remoteIP;
 }
 
 void Board::setup(int countControllers, Controller *controllers) {
@@ -116,4 +117,9 @@ void Board::receive() {
 
     this->controllers[i].setRelayPin(relays[relayPin].as<int>());
   }
+
+  Serial.printf("Received packet from IP: %s", this->Udp.remoteIP().toString().c_str());
+  Serial.println("");
+  int sameIp = (strcmp(this->Udp.remoteIP().toString().c_str(), this->remoteIP.c_str()) == 0) ? 1 : 0;
+  Serial.println(sameIp);
 }
