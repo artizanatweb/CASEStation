@@ -15,9 +15,8 @@ public:
   int buttonDelay;
   int getRelayState();
   int getRelayPin();
-  int pinButton;
 private:
-  // int pinButton;
+  int pinButton;
   int pinRelay;
   int pinLed;
   byte defaultRelayState;
