@@ -4,25 +4,20 @@
 #include "Controller.h"
 #include "ControllerPins.h"
 #include "Board.h"
+#include "WiFiConfig.h"
 
 struct ControllerPins pins[] = {
     {D1, D2, D3, HIGH},
-    {D6, D7, D8, HIGH},
+    // {D6, D7, D8, HIGH},
 };
 
 const int countControllers = sizeof(pins) / sizeof(ControllerPins);
 
 Controller controllers[countControllers];
 
-const char* ssid = "";
-const char* password = "";
+WiFiConfig wificonfig;
 
-unsigned int localPort = 4210;
-String remoteIP = "192.168.33.155";
-
-Board board = Board(ssid, password, localPort, remoteIP);
-
-// WiFiUDP Udp;
+Board board = Board(wificonfig);
 
 void setup() {
     // put your setup code here, to run once:

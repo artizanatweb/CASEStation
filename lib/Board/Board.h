@@ -6,11 +6,12 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include "Controller.h"
+#include "WiFiConfig.h"
 
 class Board {
 public:
   Board();
-  Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP);
+  Board(WiFiConfig& wificonfig);
   void setup(int countControllers, Controller *controllers);
   void receive();
   void send();

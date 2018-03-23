@@ -4,14 +4,15 @@
 #include <WiFiUdp.h>
 #include "Controller.h"
 #include "Board.h"
+#include "WiFiConfig.h"
 
 Board::Board() {}
 
-Board::Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP) {
-  this->ssid = ssid;
-  this->password = password;
-  this->localPort = localPort;
-  this->remoteIP = remoteIP;
+Board::Board(WiFiConfig& wificonfig) {
+  this->ssid = wificonfig.ssid;
+  this->password = wificonfig.password;
+  this->localPort = wificonfig.localPort;
+  this->remoteIP = wificonfig.remoteIP;
 }
 
 void Board::setup(int countControllers, Controller *controllers) {
@@ -77,6 +78,11 @@ void Board::receive() {
     return;
   }
 
+  if (!(strcmp(this->Udp.remoteIP().toString().c_str(), this->remoteIP.c_str()) == 0)) {
+    Serial.println("Unknown remote source!");
+    return;
+  }
+
   this->incomingBuffer[len] = 0;
   // Serial.println(this->incomingBuffer);
 
@@ -117,9 +123,4 @@ void Board::receive() {
 
     this->controllers[i].setRelayPin(relays[relayPin].as<int>());
   }
-
-  Serial.printf("Received packet from IP: %s", this->Udp.remoteIP().toString().c_str());
-  Serial.println("");
-  int sameIp = (strcmp(this->Udp.remoteIP().toString().c_str(), this->remoteIP.c_str()) == 0) ? 1 : 0;
-  Serial.println(sameIp);
 }
