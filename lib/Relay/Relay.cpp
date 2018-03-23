@@ -31,7 +31,7 @@ bool Relay::change() {
   }
   this->lastEvent = now;
 
-  this->state = digitalRead(this->pin);
+  this->state = this->get();
   this->state = !this->state;
 
   digitalWrite(this->pin, this->state);
@@ -40,4 +40,12 @@ bool Relay::change() {
 
 byte Relay::get() {
   return digitalRead(this->pin);
+}
+
+void Relay::set(byte state) {
+  if (this->get() == state) {
+    return;
+  }
+
+  this->change();
 }

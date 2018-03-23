@@ -15,6 +15,7 @@ public:
   int buttonDelay;
   int getRelayState();
   int getRelayPin();
+  void setRelayPin(int value);
 private:
   int pinButton;
   int pinRelay;
@@ -24,6 +25,9 @@ private:
   Button button;
   Led led;
   Relay relay;
+  bool changeRelayState;
+  byte newRelayState;
+  bool checkTime(long now);
 };
 
 #endif

@@ -17,6 +17,7 @@ public:
   byte get();
   bool change();
   void setup();
+  void set(byte state);
 };
 
 #endif

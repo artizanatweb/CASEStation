@@ -14,6 +14,9 @@ Controller::Controller(int pinButton, int pinRelay, int pinLed, byte relayState)
 
   this->buttonDelay = 500;
 
+  this->changeRelayState = false;
+  this->newRelayState = this->defaultRelayState;
+
   this->button = Button(this->pinButton);
   this->led = Led(this->pinLed);
   this->relay = Relay(this->pinRelay, this->defaultRelayState);
@@ -32,17 +35,26 @@ bool Controller::execute() {
 
   long now = millis();
 
-  byte buttonState = this->button.get();
-  if (!(HIGH == buttonState)) {
+  if (!this->checkTime(now)) {
     return false;
   }
 
-  if (now - this->lastEvent < this->buttonDelay) {
-    return false;
+  if (!this->changeRelayState) {
+    // no server request
+    // proceed to check hardware button
+    byte buttonState = this->button.get();
+    if (!(HIGH == buttonState)) {
+      return false;
+    }
+
+    this->relay.change();
+  } else {
+    // server request to change relay state
+    this->changeRelayState = false;
+    this->relay.set(this->newRelayState);
   }
   this->lastEvent = now;
 
-  bool relayChanged = this->relay.change();
   byte relayState = this->relay.get();
   if (this->defaultRelayState == relayState) {
     this->led.stop();
@@ -64,4 +76,22 @@ int Controller::getRelayState() {
 
 int Controller::getRelayPin() {
   return this->pinRelay;
+}
+
+void Controller::setRelayPin(int value) {
+  byte state = this->defaultRelayState;
+  if (value == 1) {
+    state = !state;
+  }
+
+  this->changeRelayState = true;
+  this->newRelayState = state;
+}
+
+bool Controller::checkTime(long now) {
+  if (now - this->lastEvent < this->buttonDelay) {
+    return false;
+  }
+
+  return true;
 }

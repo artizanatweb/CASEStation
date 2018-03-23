@@ -1,8 +1,9 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <WiFiUdp.h>
 #include "Controller.h"
 #include "ControllerPins.h"
-#include "BoardMessage.h"
+#include "Board.h"
 
 struct ControllerPins pins[] = {
     {D1, D2, D3, HIGH},
@@ -13,7 +14,14 @@ const int countControllers = sizeof(pins) / sizeof(ControllerPins);
 
 Controller controllers[countControllers];
 
-BoardMessage message;
+const char* ssid = "";
+const char* password = "";
+
+unsigned int localPort = 4210;
+
+Board board = Board(ssid, password, localPort);
+
+// WiFiUDP Udp;
 
 void setup() {
     // put your setup code here, to run once:
@@ -28,11 +36,13 @@ void setup() {
       controllers[i] = controller;
     };
 
-    message.setup(countControllers, controllers);
+    board.setup(countControllers, controllers);
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
+    board.receive();
+
     bool changes = false;
 
     for (int i = 0; i < countControllers; i++) {
@@ -47,5 +57,5 @@ void loop() {
 
     // changes found!
     // report to client/server
-    message.send();
+    board.send();
 }
