@@ -1,0 +1,13 @@
+#ifndef WIFICONFIG_H_
+#define WIFICONFIG_H_
+
+#include <Arduino.h>
+
+struct WiFiConfig {
+  const char* ssid = "";
+  const char* password = "";
+  unsigned int localPort = 4210;
+  String remoteIP = "";
+};
+
+#endif
