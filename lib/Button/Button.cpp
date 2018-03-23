@@ -10,12 +10,12 @@ Button::Button(int pin) {
 }
 
 void Button::setup() {
-  pinMode(this->pin, INPUT);
+  pinMode(this->pin, INPUT_PULLUP);
   this->lastEvent = millis();
   this->status = digitalRead(this->pin);
 }
 
 byte Button::get() {
   this->status = digitalRead(this->pin);
-  return this->status;
+  return !this->status;
 }
