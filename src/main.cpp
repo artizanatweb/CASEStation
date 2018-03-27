@@ -7,8 +7,8 @@
 #include "WiFiConfig.h"
 
 struct ControllerPins pins[] = {
-    {D7, D1, D8, HIGH},
-    {D6, D2, D5, HIGH},
+    {D1, D2, D3, HIGH},
+    {D6, D7, D8, HIGH},
 };
 
 const int countControllers = sizeof(pins) / sizeof(ControllerPins);

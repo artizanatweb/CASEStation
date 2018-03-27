@@ -9,10 +9,12 @@
 Board::Board() {}
 
 Board::Board(WiFiConfig& wificonfig) {
-  this->ssid = wificonfig.ssid;
-  this->password = wificonfig.password;
-  this->localPort = wificonfig.localPort;
-  this->remoteIP = wificonfig.remoteIP;
+  this->ssid = ssid;
+  this->password = password;
+  this->localPort = localPort;
+  this->remotePort = remotePort;
+  this->remoteIP = remoteIP;
+  this->remoteIPObj.fromString(this->remoteIP);
 }
 
 void Board::setup(int countControllers, Controller *controllers) {
@@ -58,6 +60,12 @@ void Board::send() {
 
   root.printTo(Serial);
   Serial.println("");
+
+  Serial.println("Sending message to " + this->remoteIPObj.toString());
+  this->Udp.beginPacket(this->remoteIPObj, this->remotePort);
+  root.printTo(this->Udp);
+  this->Udp.println();
+  this->Udp.endPacket();
 }
 
 void Board::receive() {
@@ -66,7 +74,7 @@ void Board::receive() {
     return;
   }
 
-  int packetSize = Udp.parsePacket();
+  int packetSize = this->Udp.parsePacket();
   if (!packetSize) {
     // Serial.println("No packet!");
     return;

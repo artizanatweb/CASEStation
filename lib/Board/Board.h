@@ -21,11 +21,13 @@ private:
   const char* ssid;
   const char* password;
   unsigned int localPort;
+  unsigned int remotePort;
   WiFiUDP Udp;
   char incomingBuffer[255];
   bool connected = true;
   const int connectionWait = 5000;
   String remoteIP;
+  IPAddress remoteIPObj;
 };
 
 #endif
