@@ -8,12 +8,12 @@
 
 Board::Board() {}
 
-Board::Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP, unsigned int remotePort) {
-  this->ssid = ssid;
-  this->password = password;
-  this->localPort = localPort;
-  this->remotePort = remotePort;
-  this->remoteIP = remoteIP;
+Board::Board(WiFiConfig& wificonfig) {
+  this->ssid = wificonfig.ssid;
+  this->password = wificonfig.password;
+  this->localPort = wificonfig.localPort;
+  this->remoteIP = wificonfig.remoteIP;
+  this->remotePort = wificonfig.remotePort;
   this->remoteIPObj.fromString(this->remoteIP);
 }
 

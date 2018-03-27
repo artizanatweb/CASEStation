@@ -11,7 +11,7 @@
 class Board {
 public:
   Board();
-  Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP, unsigned int remotePort);
+  Board(WiFiConfig& wificonfig);
   void setup(int countControllers, Controller *controllers);
   void receive();
   void send();
