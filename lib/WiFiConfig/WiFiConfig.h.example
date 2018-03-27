@@ -6,8 +6,9 @@
 struct WiFiConfig {
   const char* ssid = "";
   const char* password = "";
-  unsigned int localPort = 4210;
+  unsigned int localPort = 5881;
   String remoteIP = "";
+  unsigned int remotePort = 5880;
 };
 
 #endif
