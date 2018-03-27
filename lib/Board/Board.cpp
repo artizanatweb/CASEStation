@@ -64,7 +64,6 @@ void Board::send() {
   Serial.println("Sending message to " + this->remoteIPObj.toString());
   this->Udp.beginPacket(this->remoteIPObj, this->remotePort);
   root.printTo(this->Udp);
-  this->Udp.println();
   this->Udp.endPacket();
 }
 

@@ -10,7 +10,7 @@ Button::Button(int pin) {
 }
 
 void Button::setup() {
-  pinMode(this->pin, INPUT);
+  pinMode(this->pin, INPUT_PULLUP);
   this->lastEvent = millis();
   this->status = digitalRead(this->pin);
 }
