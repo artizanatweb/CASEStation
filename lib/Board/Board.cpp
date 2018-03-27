@@ -9,11 +9,11 @@
 Board::Board() {}
 
 Board::Board(WiFiConfig& wificonfig) {
-  this->ssid = ssid;
-  this->password = password;
-  this->localPort = localPort;
-  this->remotePort = remotePort;
-  this->remoteIP = remoteIP;
+  this->ssid = wificonfig.ssid;
+  this->password = wificonfig.password;
+  this->localPort = wificonfig.localPort;
+  this->remoteIP = wificonfig.remoteIP;
+  this->remotePort = wificonfig.remotePort;
   this->remoteIPObj.fromString(this->remoteIP);
 }
 
