@@ -11,7 +11,7 @@
 class Board {
 public:
   Board();
-  Board(WiFiConfig& wificonfig);
+  Board(const char* ssid, const char* password, unsigned int localPort, String remoteIP, unsigned int remotePort);
   void setup(int countControllers, Controller *controllers);
   void receive();
   void send();
@@ -21,11 +21,13 @@ private:
   const char* ssid;
   const char* password;
   unsigned int localPort;
+  unsigned int remotePort;
   WiFiUDP Udp;
   char incomingBuffer[255];
   bool connected = true;
   const int connectionWait = 5000;
   String remoteIP;
+  IPAddress remoteIPObj;
 };
 
 #endif
